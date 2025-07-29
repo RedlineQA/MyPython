@@ -21,7 +21,7 @@ class LoginPage:
             }
         """)
 
-        continue_button = self.page.locator("button.button-module_button__17Mvp")
+        continue_button = self.page.get_by_role("button", name="Continue")
         self.page.wait_for_timeout(1000)
         continue_button.click()
 
@@ -38,5 +38,5 @@ class LoginPage:
             }
         """)
 
-        sign_in_button = self.page.locator("button.button-module_content__35zEt")
+        sign_in_button = self.page.get_by_role("button", name="Sign in")
         sign_in_button.click()
