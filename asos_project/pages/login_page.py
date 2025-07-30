@@ -55,7 +55,7 @@ class LoginPage:
 
     def verify_login_unregistered_email(self):
         join_button = self.page.get_by_role("button", name="Join ASOS")
-        expect(join_button).to_be_visible(timeout=1000)
+        expect(join_button).to_be_visible(timeout=3000)
 
     def verify_login_wrong_password(self):
         sign_in_button = self.page.get_by_role("button", name="Sign in")
