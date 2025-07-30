@@ -35,6 +35,7 @@ class LoginPage:
         self.trigger_input_events("#password")
 
         sign_in_button = self.page.get_by_role("button", name="Sign in")
+        self.page.wait_for_timeout(1000)
         sign_in_button.click()
 
     def verify_login_success(self):
