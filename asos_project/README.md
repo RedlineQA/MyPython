@@ -35,7 +35,7 @@ If login fails without clear reason, wait a few minutes and try again.
 
 ---
 
-## 🤖 Why `.type()` instead of `.fill()`?
+### 🤖 Why `.type()` instead of `.fill()`?
 
 The login form uses JavaScript-based validation that listens for **real user input events** like `input`, `change`, and `blur`.
 
@@ -43,9 +43,11 @@ To simulate **human-like typing** and trigger those events correctly, the follow
 
 ```python
 email_input.type(user_email, delay=50)
+```
 
 Instead of:
 
+```python
 email_input.fill(user_email)
 ```
 
