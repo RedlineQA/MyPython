@@ -1,3 +1,5 @@
+from playwright.sync_api import expect
+
 class LoginPage:
     def __init__(self, page):
         self.page = page
@@ -12,7 +14,7 @@ class LoginPage:
             }}
         """)
 
-    def login(self, user_email, user_password):
+    def login_user_email(self, user_email):
         my_account_button = self.page.locator("#myAccountDropdown")
         my_account_button.click()
 
@@ -25,9 +27,9 @@ class LoginPage:
         self.trigger_input_events("#email")
 
         continue_button = self.page.get_by_role("button", name="Continue")
-        self.page.wait_for_timeout(1000)
         continue_button.click()
 
+    def login_user_password(self, user_password):
         self.page.wait_for_selector("#password")
         password_input = self.page.locator("#password")
         password_input.type(user_password, delay=50)
@@ -35,10 +37,29 @@ class LoginPage:
         self.trigger_input_events("#password")
 
         sign_in_button = self.page.get_by_role("button", name="Sign in")
-        self.page.wait_for_timeout(1000)
         sign_in_button.click()
 
     def verify_login_success(self):
         my_account_button = self.page.locator("#myAccountDropdown")
         my_account_button.click()
-        assert self.page.locator("text=Sign out").is_visible()
+
+        sign_out_button = self.page.locator("text=Sign out")
+        expect(sign_out_button).to_be_visible()
+
+    def verify_login_invalid_email_format(self):
+        continue_button = self.page.get_by_role("button", name="Continue")
+        continue_button.click()
+
+        error_locator = self.page.locator("text=Oops! Please type in your correct email address")
+        expect(error_locator).to_be_visible(timeout=1000)
+
+    def verify_login_unregistered_email(self):
+        join_button = self.page.get_by_role("button", name="Join ASOS")
+        expect(join_button).to_be_visible(timeout=1000)
+
+    def verify_login_wrong_password(self):
+        sign_in_button = self.page.get_by_role("button", name="Sign in")
+        sign_in_button.click()
+
+        error_locator = self.page.locator("text=email or password were incorrect")
+        expect(error_locator).to_be_visible()
