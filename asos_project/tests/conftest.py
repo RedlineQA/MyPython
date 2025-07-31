@@ -2,6 +2,7 @@ import pytest
 from playwright.sync_api import sync_playwright
 
 from asos_project.pages.login_page import LoginPage
+from asos_project.tests.globals import BASE_URL
 
 
 @pytest.fixture()
@@ -19,7 +20,7 @@ def setup_asos():
         context.clear_cookies()
 
         page = context.new_page()
-        page.goto("https://www.asos.com/")
+        page.goto(BASE_URL)
 
         login_page = LoginPage(page)
 
