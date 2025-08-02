@@ -6,6 +6,7 @@ class LoginPage:
     def __init__(self, page):
         self.page = page
 
+
     def trigger_input_events(self, selector: str):
         self.page.evaluate(f"""
             () => {{
@@ -15,6 +16,7 @@ class LoginPage:
                 input.dispatchEvent(new Event('blur', {{ bubbles: true }}));
             }}
         """)
+
 
     def login_user_email(self, user_email):
         my_account_button = self.page.locator("#myAccountDropdown")
@@ -31,6 +33,7 @@ class LoginPage:
         continue_button = self.page.get_by_role("button", name="Continue")
         continue_button.click()
 
+
     def login_user_password(self, user_password):
         self.page.wait_for_selector("#password")
         password_input = self.page.locator("#password")
@@ -40,6 +43,7 @@ class LoginPage:
 
         sign_in_button = self.page.get_by_role("button", name="Sign in")
         sign_in_button.click()
+
 
     def verify_login_success(self):
         my_account_button = self.page.locator("#myAccountDropdown")
@@ -54,6 +58,7 @@ class LoginPage:
             print("\u2139 Possible cause: User access may have been temporarily restricted by site security mechanisms")
             raise
 
+
     def verify_login_invalid_email_format(self):
         continue_button = self.page.get_by_role("button", name="Continue")
         continue_button.click()
@@ -67,6 +72,7 @@ class LoginPage:
             print("\u2139 Possible cause: Validation text may have changed or failed to load in time.")
             raise
 
+
     def verify_login_unregistered_email(self):
         join_button = self.page.get_by_role("button", name="Join ASOS")
         try:
@@ -76,6 +82,7 @@ class LoginPage:
             print("\u274C 'Join ASOS' button did not appear for unregistered email.")
             print("\u2139 Possible cause: The email may not have been detected as unregistered.")
             raise
+
 
     def verify_login_wrong_password(self):
         sign_in_button = self.page.get_by_role("button", name="Sign in")

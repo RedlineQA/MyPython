@@ -2,6 +2,7 @@ import pytest
 from playwright.sync_api import sync_playwright
 
 from asos_project.pages.login_page import LoginPage
+from asos_project.pages.preferences_page import Preferences
 from asos_project.tests.globals import BASE_URL
 
 
@@ -9,7 +10,7 @@ from asos_project.tests.globals import BASE_URL
 def setup_asos():
     print("### Test start ###")
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False)
+        browser = playwright.chromium.launch(headless=False, slow_mo=500)
 
         context = browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
@@ -23,9 +24,10 @@ def setup_asos():
         page.goto(BASE_URL)
 
         login_page = LoginPage(page)
+        preferences_page = Preferences(page)
 
-        yield page, login_page
+        yield page, login_page, preferences_page
 
-        print("### Test end ###")
         page.close()
         browser.close()
+        print("### Test end ###")
