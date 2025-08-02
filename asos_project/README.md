@@ -137,10 +137,10 @@ asos_project/
 │   ├── login_page.py          # Page Object for login functionality
 │   └── preferences_page.py    # Page Object for user preferences (currency)
 ├── tests/
+│   ├── conftest.py            # Pytest fixtures and setup
+│   ├── globals.py             # Test data (e.g. valid/invalid credentials)
 │   ├── test_login.py          # Test suite for login scenarios
 │   └── test_preferences.py    # Test suite for currency preferences
-├── globals.py                 # Test data (e.g. valid/invalid credentials)
-└── conftest.py                # Pytest fixtures and setup
 ```
 
 ---
