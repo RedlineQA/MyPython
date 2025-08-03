@@ -68,24 +68,34 @@ This approach reduces the chance of bot detection and ensures the form behaves a
 
 ---
 
-## 💱 Currency Preference Test
+## ⚙️ Country & Currency Preferences Test
 
-This test ensures that changing the user's currency preference to **USD ($)** is reflected both:
+This test ensures that updating the user's **country** and **currency** preferences works correctly and is reflected in both:
 
-- In the **dropdown selection UI**
-- In the **pricing of actual listed products**
+- The **selected values in the preferences modal**
+- The **pricing of actual listed products**
 
 ---
 
 ### 🧪 Test Flow:
 
 1. Open preferences modal  
-2. Change currency using `select_option("#currency", value="2")`  
-3. Click **UPDATE PREFERENCES**  
-4. Re-open modal and assert `$ USD` is selected  
-5. Navigate to product list  
-6. Extract first product price  
-7. Assert currency symbol is `$` or `USD`
+2. Change **country** to Israel using `select_option("#country", value="IL")`  
+   - This step is required, as currency selection is only available for Israel  
+3. Change **currency** using `select_option("#currency", value="2")`  
+4. Click **UPDATE PREFERENCES**  
+5. Re-open modal and assert `Israel` and `$ USD` are selected  
+6. Navigate to product list  
+7. Extract first product price  
+8. Assert currency symbol is `$` or `USD`
+
+---
+
+### ⚠️ Note: Currency Selector is Region-Specific
+
+The currency dropdown is **only available when the selected country is set to Israel**.  
+In all other regions (e.g. US, UK, EU), the currency is fixed and the dropdown is disabled.  
+As a result, the test explicitly sets the country to **Israel** before attempting to change the currency.
 
 ---
 
@@ -111,8 +121,9 @@ page.eval_on_selector("#currency", "el => el.dispatchEvent(new Event('change', {
 
 ### ✅ Conclusion:
 
-This is assumed to be a **bug in the website’s behavior** or **intentional server-side validation**.  
+This is assumed to be a bug in the website’s behavior or intentional server-side validation.
 The test includes assertions and will log a warning if the change doesn’t persist.
+Failures in this area are considered known and documented.
 
 ---
 
