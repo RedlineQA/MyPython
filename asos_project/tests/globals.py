@@ -7,4 +7,3 @@ VALID_USER_EMAIL_WRONG_PASSWORD = "heavybrown@somoj.com"
 WRONG_PASSWORD = "wrongpassword"
 INVALID_USER_EMAIL_FORMAT = "qwerty"
 UNREGISTERED_EMAIL = "unregistered@gmail.com"
-
