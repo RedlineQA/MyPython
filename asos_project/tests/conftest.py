@@ -1,8 +1,9 @@
 import pytest
 from playwright.sync_api import sync_playwright
 
+from asos_project.pages.bag_page import BagPage
 from asos_project.pages.login_page import LoginPage
-from asos_project.pages.preferences_page import Preferences
+from asos_project.pages.preferences_page import PreferencesPage
 from asos_project.tests.globals import BASE_URL
 
 
@@ -24,9 +25,10 @@ def setup_asos():
         page.goto(BASE_URL)
 
         login_page = LoginPage(page)
-        preferences_page = Preferences(page)
+        preferences_page = PreferencesPage(page)
+        bag_page = BagPage(page)
 
-        yield page, login_page, preferences_page
+        yield page, login_page, preferences_page, bag_page
 
         page.close()
         browser.close()
