@@ -1,7 +1,7 @@
 import re
 
 
-class Preferences:
+class PreferencesPage:
     def __init__(self, page):
         self.page = page
 

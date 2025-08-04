@@ -1,13 +1,12 @@
 class TestPreferences:
     def test_change_country(self, setup_asos):
-        page, _, preferences_page = setup_asos
+        page, _, preferences_page, _ = setup_asos
 
         preferences_page.change_country()
-
         preferences_page.verify_country_change()
 
     def test_change_currency(self, setup_asos):
-        page, _, preferences_page = setup_asos
+        page, _, preferences_page, _ = setup_asos
 
         preferences_page.change_currency()
 
