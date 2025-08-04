@@ -127,6 +127,78 @@ Failures in this area are considered known and documented.
 
 ---
 
+## 🛍️ Bag Add Test (Product to Cart)
+
+This test attempts to **navigate the site, select a product, choose a size**, and **add it to the shopping bag**.
+
+---
+
+### 🧪 Test Flow:
+
+1. Navigate to **Men → New In → View All**
+2. Iterate through the product list  
+3. For each product:
+   - Skip products marked as `Out of stock`
+   - If available:
+     - Select the **first valid size**
+     - Click the **"Add to Bag"** button
+     - Wait for a network response (`/bag` URL)
+     - Assert that **no error message** is shown
+4. If successful:
+   - Open the bag via the mini icon
+   - Assert that at least one item appears in the cart
+
+---
+
+### ⚙️ Technical Notes:
+
+- Uses `.click()` wrapped with `expect_response()` to listen for `/bag` network request
+- If regular click fails, a **JavaScript-based fallback** is attempted:
+  ```javascript
+  el.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }));
+  el.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+  el.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+  el.click();
+  ```
+- Error messages detected via:
+  ```python
+  page.get_by_test_id("bag-error-message")
+  ```
+
+---
+
+### ❌ Known Issues
+
+Adding items to the bag may fail even when everything seems correct:
+
+- Product *appears available* but triggers a hidden server-side validation
+- Site may return a `200 OK` response without actually adding the item
+- `bag-error-message` may appear with no explanation
+- Anti-bot mechanisms may silently interfere with the request
+
+---
+
+### 🔍 Debug Features
+
+- Log messages use Unicode icons for clarity:
+  - `\U0001F50D` (🔍), `\u2705` (✅), `\U0001F5B1` (🖱️), `\U0001F9EA` (🧪), `\u274C` (❌), `\U0001F6D1` (🛑), `\U0001F6CD` (🛒), `\u26A0` (⚠️)
+- JS fallback added when normal click fails
+- The test **fails fast** with meaningful logs and assertion
+
+---
+
+### ✅ Conclusion
+
+The test simulates a full add-to-bag flow and logs failures clearly.  
+However, **failure does not always mean test bug** — sometimes it's site logic or protection.
+
+If the bag still shows empty, the test raises:
+```
+❌ Expected item in bag, but got 'Your bag is empty' message
+```
+
+---
+
 ## 📌 Additional Notes
 This project will be expanded in the future to include further automation scenarios such as:
 
