@@ -7,39 +7,39 @@ class BagPage:
 
     def try_click_add_to_bag(self) -> bool:
         try:
-            print("🔍 Looking for the ADD TO BAG button on the product page")
+            print("\U0001F50D Looking for the ADD TO BAG button on the product page")
             add_btn = self.page.locator('#pdp-react-critical-app [data-testid="add-button"]')
             add_btn.wait_for(state="visible", timeout=5000)
 
-            print("✅ Found, scrolling into view")
+            print("\u2705 Found, scrolling into view")
             add_btn.scroll_into_view_if_needed()
             self.page.wait_for_timeout(500)
 
-            print("🖱️ Hovering over the button")
+            print("\U0001F5B1\ufe0f Hovering over the button")
             add_btn.hover()
             self.page.wait_for_timeout(300)
 
-            print("🧪 Trying regular click + watching Network")
+            print("\U0001F9EA Trying regular click + watching Network")
             with self.page.expect_response(lambda res: "bag" in res.url, timeout=5000) as response_info:
                 add_btn.click()
 
             if self.page.get_by_test_id("bag-error-message").first.is_visible():
-                print("❌ Add to bag failed — error message displayed")
+                print("\u274C Add to bag failed — error message displayed")
                 return False
 
             response = response_info.value
-            print(f"✅ Network response from: {response.url} | status: {response.status}")
+            print(f"\u2705 Network response from: {response.url} | status: {response.status}")
 
             if response.status != 200:
-                print("❌ Add to bag request failed with non-200 status")
+                print("\u274C Add to bag request failed with non-200 status")
                 return False
 
             return True
 
         except Exception as e:
-            print(f"❌ Regular click failed: {e}")
+            print(f"\u274C Regular click failed: {e}")
             try:
-                print("🛠️ Trying JS fallback click")
+                print("\U0001FA9A Trying JS fallback click")
                 self.page.eval_on_selector('#pdp-react-critical-app [data-testid="add-button"]', """
                     el => {
                         el.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }));
@@ -51,16 +51,16 @@ class BagPage:
                 self.page.wait_for_timeout(300)
 
                 if self.page.get_by_test_id("bag-error-message").first.is_visible():
-                    print("❌ JS fallback failed — error message displayed")
+                    print("\u274C JS fallback failed — error message displayed")
                     return False
 
-                print("✅ Force-clicked via JS fallback.")
+                print("\u2705 Force-clicked via JS fallback.")
                 return True
             except Exception as inner_e:
-                print(f"❌ JS fallback completely failed: {inner_e}")
+                print(f"\u274C JS fallback completely failed: {inner_e}")
                 return False
 
-    def add_to_bag(self) -> bool:  # ✅ Returns success/failure
+    def add_to_bag(self) -> bool:  #Returns success/failure
         self.page.get_by_test_id("men-floor").click()
         self.page.get_by_role("button", name="New in").hover()
         self.page.get_by_role("link", name="View all").click()
@@ -97,7 +97,7 @@ class BagPage:
                     if result:
                         return True
                     else:
-                        print("🛑 Stopping test due to add-to-bag failure")
+                        print("\U0001F6D1 Stopping test due to add-to-bag failure")
                         return False
 
                 self.page.go_back()
@@ -108,7 +108,7 @@ class BagPage:
                 if result:
                     return True
                 else:
-                    print("🛑 Stopping test due to add-to-bag failure (no size selection case)")
+                    print("\U0001F6D1 Stopping test due to add-to-bag failure (no size selection case)")
                     return False
             else:
                 self.page.go_back()
@@ -116,16 +116,16 @@ class BagPage:
         return False  # In case we couldn’t add any item at all
 
     def verify_added_to_bag(self):
-        print("🛒 Verifying bag contents")
+        print("\U0001F6CD\ufe0f Verifying bag contents")
         self.page.get_by_test_id("miniBagIcon").click()
         self.page.wait_for_load_state("domcontentloaded")
 
         empty_bag_title = self.page.locator("h1.empty-bag-title")
         if empty_bag_title.is_visible():
-            print("⚠️ Detected 'Your bag is empty' despite trying to add a product.")
-            raise Exception("❌ Expected item in bag, but got 'Your bag is empty' message")
+            print("\u26A0\ufe0f Detected 'Your bag is empty' despite trying to add a product.")
+            raise Exception("\u274C Expected item in bag, but got 'Your bag is empty' message")
 
         items_in_bag = self.page.locator("ul.bag-items > li")
         count = items_in_bag.count()
-        print(f"✅ Bag contains {count} item(s)")
-        assert count > 0, "❌ No items in the bag"
+        print(f"\u2705 Bag contains {count} item(s)")
+        assert count > 0, "\u274C No items in the bag"
