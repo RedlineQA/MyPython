@@ -63,7 +63,7 @@ class BagPage:
     def add_to_bag(self) -> bool:  #Returns success/failure
         self.page.get_by_test_id("men-floor").click()
         self.page.get_by_role("button", name="New in").hover()
-        self.page.get_by_role("link", name="View all").click()
+        self.page.get_by_role("link", name="View all").first.click()
 
         product_link = self.page.locator(".productLink_KM4PI")
         product_count = product_link.count()
