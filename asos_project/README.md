@@ -279,7 +279,14 @@ asos_project/
 
 ## 🙋 Author
 
-Made with ❤️ by Yuri Kirsanov
+Made with ❤️ by:
+Yuri Kirsanov
 
 🔗 [LinkedIn](https://www.linkedin.com/in/yuri-kirsanov/)  
 🐙 [GitHub](https://github.com/RedlineQA)
+
+And
+Lia Prokopiev
+
+🔗 [LinkedIn](https://www.linkedin.com/in/lia-p-0abb89136/)
+🐙 [GitHub](https://github.com/LiaProkopiev)
