@@ -199,12 +199,53 @@ If the bag still shows empty, the test raises:
 
 ---
 
+## 💾 Saved Items Test
+
+This test validates the ability to **save a product for later** and optionally **remove it** from the Saved Items list.
+
+---
+
+### 🧪 Test Flow:
+
+1. Navigate to **Men → New In → View All**
+2. Click on the **first product**
+3. Add the product to **Saved Items**
+4. Open the **Saved Items** page
+5. Assert that the product is **visible** in the list
+6. Remove the product from Saved Items
+7. Assert that the list now displays **"You have no Saved Items"**
+
+---
+
+### ⚙️ Technical Notes
+
+- Page actions and assertions are handled using Page Object Model:
+  - `add_to_saved_items()`
+  - `verify_add_to_saved_items()`
+  - `remove_from_saved_items()`
+  - `verify_remove_from_saved_items()`
+
+- Unicode indicators are used for logging:
+  - ✅ `Item successfully found in Saved Items!`
+  - ✅ `Item successfully removed from Saved Items!`
+  - ❌ `Item not visible in Saved Items!`
+  - ❌ `Failed to remove item from Saved Items!`
+
+- Simple and fast test, minimal risk of flakiness compared to login/cart flows
+
+---
+
+### ✅ Conclusion
+
+This test verifies both adding and removing Saved Items with clear feedback.  
+It can serve as a **quick sanity check** for user wishlist functionality.
+
+---
+
 ## 📌 Additional Notes
 This project will be expanded in the future to include further automation scenarios such as:
 
 - Product search
-
-- Cart management
 
 - Checkout flow
 
@@ -214,16 +255,24 @@ This project will be expanded in the future to include further automation scenar
 
 ## 📂 Project Structure
 
-```python
+```bash
 asos_project/
 ├── pages/
-│   ├── login_page.py          # Page Object for login functionality
-│   └── preferences_page.py    # Page Object for user preferences (currency)
+│   ├── bag_page.py             # Page Object for bag/cart functionality
+│   ├── login_page.py           # Page Object for login functionality
+│   ├── preferences_page.py     # Page Object for country & currency preferences
+│   └── saved_items_page.py     # Page Object for Saved Items (wishlist)
+│
 ├── tests/
-│   ├── conftest.py            # Pytest fixtures and setup
-│   ├── globals.py             # Test data (e.g. valid/invalid credentials)
-│   ├── test_login.py          # Test suite for login scenarios
-│   └── test_preferences.py    # Test suite for currency preferences
+│   ├── conftest.py             # Pytest fixtures and browser setup
+│   ├── globals.py              # Test data (credentials, etc.)
+│   ├── test_bag.py             # Test suite for adding products to cart
+│   ├── test_login.py           # Test suite for login functionality
+│   ├── test_preferences.py     # Test suite for preferences (country & currency)
+│   └── test_saved_items.py     # Test suite for Saved Items functionality
+│
+├── README.md                   # Project documentation
+└── requirements.txt            # Dependencies list
 ```
 
 ---
