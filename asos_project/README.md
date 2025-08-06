@@ -277,7 +277,7 @@ asos_project/
 
 ---
 
-## 🙋 Author
+## 🙋 Authors
 
 Made with ❤️ by:
 
