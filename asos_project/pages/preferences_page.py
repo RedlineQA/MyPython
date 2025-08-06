@@ -61,7 +61,7 @@ class PreferencesPage:
         self.page.get_by_test_id("men-floor").click()
 
         self.page.get_by_role("button", name="New in").hover()
-        self.page.get_by_role("link", name="View all").click()
+        self.page.get_by_role("link", name="View all").first.click()
 
         price_element = self.page.locator("[class='price__B9LP']").first
         price_text = price_element.text_content()
