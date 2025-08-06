@@ -288,5 +288,5 @@ Yuri Kirsanov
 And
 Lia Prokopiev
 
-🔗 [LinkedIn](https://www.linkedin.com/in/lia-p-0abb89136/)
+🔗 [LinkedIn](https://www.linkedin.com/in/lia-p-0abb89136/)  
 🐙 [GitHub](https://github.com/LiaProkopiev)
